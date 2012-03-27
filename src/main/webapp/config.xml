@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+  <widgetname>SVG Push</widgetname>
+  <description>Educational game for kindergarten children. Push is an SVG adaptation of the classic tile puzzle game: the player must reorder the tiles by pushing them in order to form an image.</description>
+  <width>640</width>
+  <height>480</height>
+  <author>
+    <name>Lukas Laag</name>
+    <email>laaglu@gmail.com</email>
+    <link>http://www.vectomatic.org</link>
+  </author>
+</widget>

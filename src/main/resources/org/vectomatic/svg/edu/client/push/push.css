@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+.border-in {
+	fill:bisque;
+	stroke:black;
+}
+.border-out {
+	stroke:black;
+	fill:lightblue;
+}
+.tile-border {
+	fill:none;
+	stroke:black;
+}

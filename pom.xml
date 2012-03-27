@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.vectomatic</groupId>
+		<artifactId>vectomatic-gwt-parent</artifactId>
+		<version>0.1</version>
+	</parent>
+	<artifactId>lib-gwt-svg-edu-push</artifactId>
+	<packaging>war</packaging>
+	<version>0.3.13-SNAPSHOT</version>
+	<name>lib-gwt-svg-edu-push</name>
+	<description>Educational game for kindergarten children, based on lib-gwt-svg. Push push is an SVG adaptation of the classic tile puzzle game: the player must reorder the tiles by pushing them in order to form an image</description>
+	<url>http://www.vectomatic.org/mvn-sites/lib-gwt-svg-edu-push</url>
+	<licenses>
+		<license>
+			<name>GPLv3</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
+		</license>
+	</licenses>
+	<scm>
+		<url>http://code.google.com/p/vectomatic/source/browse/#svn/lib-gwt-svg-edu-push/trunk</url>
+		<connection>scm:svn:http://vectomatic.googlecode.com/svn/lib-gwt-svg-edu-push/trunk</connection>
+		<developerConnection>scm:svn:file:///home/laaglu/svn/laaglu-svn/lib-gwt-svg-edu-push/trunk</developerConnection>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>org.vectomatic</groupId>
+			<artifactId>lib-gwt-svg</artifactId>
+			<version>0.5.6-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vectomatic</groupId>
+			<artifactId>lib-gwt-svg-edu-commons</artifactId>
+			<version>0.3.13</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<properties>
+		<gwt.module>org.vectomatic.svg.edu.push</gwt.module>
+	</properties>
+	
+	<build>
+		<resources>
+			<!-- Add source code to the jar -->
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*.java</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
+	</build>
+	<distributionManagement>
+		<downloadUrl>http://www.vectomatic.org/games/lib-gwt-svg-edu/push</downloadUrl>
+	</distributionManagement>
+	<profiles>
+		<!-- ==========================================
+		 Profiles to manage the choice of permutations:
+		 perm-ff: build only the firefox permutation 
+		 ==============================================-->
+		<profile>
+			<id>perm-ff</id>
+			<properties>
+				<gwt.module>org.vectomatic.svg.edu.pushff</gwt.module>
+	   		</properties>
+		</profile>
+		
+		<!-- ==========================================
+		 Profiles to manage the build-style:
+		 build-detailed: build with detailed symbols
+		 ==============================================-->
+		<profile>
+			<id>build-detailed</id>
+			<properties>
+    			<gwt.style>DETAILED</gwt.style>
+    			<gwt.logLevel>INFO</gwt.logLevel>
+    		</properties>
+		</profile>
+	
+		<!-- ==========================================
+		 Profile to create an opera widget
+		 ==============================================-->
+		<profile>
+			<id>operaWidget</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+     			<gwt.module>org.vectomatic.svg.edu.pushOperaWidget</gwt.module>
+    		</properties>
+		 	<build>
+				<plugins>
+		    		<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>build-widget</id>
+								<phase>package</phase>
+								<configuration>
+									<tasks>
+										<property name="widget.filename" value="${project.build.directory}/svg-push.wgt" />
+										<zip destfile="${widget.filename}">
+											<fileset dir="src/main/webapp">
+												<exclude name="WEB-INF/**" />
+												<exclude name="META-INF/**" />
+											</fileset>
+											<fileset dir="${project.build.directory}/${project.build.finalName}">
+												<exclude name="WEB-INF/**" />
+												<exclude name="META-INF/**" />
+											</fileset>
+										</zip>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+		    	</plugins>
+    		</build>
+		</profile>
+	</profiles>
+</project>
