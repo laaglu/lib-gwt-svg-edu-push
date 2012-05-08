@@ -56,6 +56,16 @@
 				<directory>${basedir}/src/main/resources</directory>
 			</resource>
 		</resources>
+        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- Put the pom classes in an external jar -->
+					<attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 	<distributionManagement>
 		<downloadUrl>http://www.vectomatic.org/games/lib-gwt-svg-edu/push</downloadUrl>
