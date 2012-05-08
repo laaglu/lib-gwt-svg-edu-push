@@ -46,6 +46,7 @@ import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -319,6 +320,8 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 				viewBox.getY() - borderHeight - MARGIN,
 				viewBox.getWidth() + 2 * (borderWidth + MARGIN), 
 				viewBox.getHeight() + 2 * (borderHeight + MARGIN));
+		rootSvg.getWidth().getBaseVal().newValueSpecifiedUnits(Unit.PCT, 100);
+		rootSvg.getHeight().getBaseVal().newValueSpecifiedUnits(Unit.PCT, 100);
 		
 		// Create the tile clip-path
 		// <clipPath id="cp">
