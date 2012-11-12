@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.vectomatic</groupId>
 		<artifactId>vectomatic-gwt-parent</artifactId>
-		<version>0.2-SNAPSHOT</version>
+		<version>0.2</version>
 	</parent>
 	<artifactId>lib-gwt-svg-edu-push</artifactId>
 	<packaging>war</packaging>
@@ -26,12 +26,12 @@
 		<dependency>
 			<groupId>org.vectomatic</groupId>
 			<artifactId>lib-gwt-svg</artifactId>
-			<version>0.5.7-SNAPSHOT</version>
+			<version>0.5.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.vectomatic</groupId>
 			<artifactId>lib-gwt-svg-edu-commons</artifactId>
-			<version>0.3.15-SNAPSHOT</version>
+			<version>0.3.15</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
