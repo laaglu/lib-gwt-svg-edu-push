@@ -23,7 +23,6 @@ import java.util.List;
 import org.vectomatic.dom.svg.OMNode;
 import org.vectomatic.dom.svg.OMSVGClipPathElement;
 import org.vectomatic.dom.svg.OMSVGDefsElement;
-import org.vectomatic.dom.svg.OMSVGDocument;
 import org.vectomatic.dom.svg.OMSVGGElement;
 import org.vectomatic.dom.svg.OMSVGMatrix;
 import org.vectomatic.dom.svg.OMSVGPoint;
@@ -36,7 +35,6 @@ import org.vectomatic.dom.svg.OMSVGUseElement;
 import org.vectomatic.dom.svg.ui.SVGPushButton;
 import org.vectomatic.dom.svg.utils.AsyncXmlLoader;
 import org.vectomatic.dom.svg.utils.AsyncXmlLoaderCallback;
-import org.vectomatic.dom.svg.utils.OMSVGParser;
 import org.vectomatic.dom.svg.utils.SVGConstants;
 import org.vectomatic.svg.edu.client.commons.CommonBundle;
 import org.vectomatic.svg.edu.client.commons.CommonConstants;
@@ -255,15 +253,14 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 	}
 	
 	private void generate() {
-		OMSVGDocument document = OMSVGParser.currentDocument();
-		OMSVGSVGElement rootSvg = document.createSVGSVGElement();
+		OMSVGSVGElement rootSvg = new OMSVGSVGElement();
 		rootSvg.addMouseDownHandler(this);
-		OMSVGDefsElement defs = document.createSVGDefsElement();
+		OMSVGDefsElement defs = new OMSVGDefsElement();
 		rootSvg.appendChild(defs);
 		
 		// Copy the source SVG in a dedicated group inside
 		// the defs
-		OMSVGGElement imgGroup = document.createSVGGElement();
+		OMSVGGElement imgGroup = new OMSVGGElement();
 		imgGroup.setId(ID_IMAGE);
 		for (OMNode node : srcSvg.getChildNodes()) {
 			imgGroup.appendChild(node.cloneNode(true));
@@ -295,7 +292,7 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 		float borderHeight = (int)(0.075f * height);
 		float borderRx = (int)(0.025f * width);
 		float borderRy = (int)(0.025f * height);
-		OMSVGRectElement borderOut = document.createSVGRectElement(
+		OMSVGRectElement borderOut = new OMSVGRectElement(
 				viewBox.getX() - borderWidth - MARGIN, 
 				viewBox.getY() - borderHeight - MARGIN,
 				viewBox.getWidth() + 2 * (borderWidth + MARGIN), 
@@ -303,7 +300,7 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 				borderRx,
 				borderRy);
 		borderOut.setClassNameBaseVal(style.borderOut());
-		OMSVGRectElement borderIn = document.createSVGRectElement(
+		OMSVGRectElement borderIn = new OMSVGRectElement(
 				viewBox.getX() - MARGIN, 
 				viewBox.getY() - MARGIN,
 				viewBox.getWidth() + 2 * MARGIN, 
@@ -327,9 +324,9 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 		// <clipPath id="cp">
 	 	//  <rect id="cpr" x="0" y="0" width="130" height="130" rx="10" ry="10"/>
 	 	// </clipPath>
-		OMSVGClipPathElement clipPath = document.createSVGClipPathElement();
+		OMSVGClipPathElement clipPath = new OMSVGClipPathElement();
 		clipPath.setId(ID_CLIP_PATH);
-		OMSVGRectElement clipRect = document.createSVGRectElement(
+		OMSVGRectElement clipRect = new OMSVGRectElement(
 				viewBox.getX(),
 				viewBox.getY(),
 				width / xcount,
@@ -358,21 +355,21 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 					//  </g>
 					//  <use x="0" y="0" xlink:href="#cp1r" style="fill:none;stroke:black;"/>
 					// </g>		
-					OMSVGGElement tileDef = document.createSVGGElement();
+					OMSVGGElement tileDef = new OMSVGGElement();
 					tileDef.setId(ID_TILE + index);
-					OMSVGGElement tileClipPath = document.createSVGGElement();
+					OMSVGGElement tileClipPath = new OMSVGGElement();
 					tileClipPath.getStyle().setSVGProperty(SVGConstants.CSS_CLIP_PATH_PROPERTY, "url(#" + ID_CLIP_PATH + ")");
-					OMSVGGElement tileTransform = document.createSVGGElement();
+					OMSVGGElement tileTransform = new OMSVGGElement();
 					OMSVGTransform xform = rootSvg.createSVGTransform();
 					xform.setTranslate(
 							viewBox.getX() - i * width / xcount, 
 							viewBox.getY() - j * height / ycount);
 					tileTransform.getTransform().getBaseVal().appendItem(xform);
-					OMSVGUseElement imgUse = document.createSVGUseElement();
+					OMSVGUseElement imgUse = new OMSVGUseElement();
 					imgUse.getX().getBaseVal().setValue(viewBox.getX());
 					imgUse.getY().getBaseVal().setValue(viewBox.getY());
 					imgUse.getHref().setBaseVal("#" + ID_IMAGE);
-					OMSVGUseElement tileBorder = document.createSVGUseElement();
+					OMSVGUseElement tileBorder = new OMSVGUseElement();
 					tileBorder.getX().getBaseVal().setValue(viewBox.getX());
 					tileBorder.getY().getBaseVal().setValue(viewBox.getY());
 					tileBorder.getHref().setBaseVal("#" + ID_CLIP_RECT);
@@ -385,7 +382,7 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 					
 					// Create the tile itself
 					// <use x="130" y="260" xlink:href="#tileXXX"/>
-					tiles[index] = document.createSVGUseElement();
+					tiles[index] = new OMSVGUseElement();
 					tiles[index].getHref().setBaseVal("#" + ID_TILE + index);
 					rootSvg.appendChild(tiles[index]);
 				}
