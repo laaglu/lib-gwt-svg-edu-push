@@ -38,7 +38,9 @@ import org.vectomatic.dom.svg.utils.AsyncXmlLoaderCallback;
 import org.vectomatic.dom.svg.utils.SVGConstants;
 import org.vectomatic.svg.edu.client.commons.CommonBundle;
 import org.vectomatic.svg.edu.client.commons.CommonConstants;
+import org.vectomatic.svg.edu.client.commons.DifficultyPicker;
 import org.vectomatic.svg.edu.client.commons.LicenseBox;
+import org.vectomatic.svg.edu.client.commons.Utils;
 
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.Duration;
@@ -46,11 +48,11 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.StyleInjector;
-import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -63,7 +65,6 @@ import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -75,7 +76,6 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 	private static final String ID_TILE = "t";
 	private static final int MARGIN = 3;
 	
-	@UiField(provided=true)
 	PushBundle resources = PushBundle.INSTANCE;
 	@UiField(provided=true)
 	CommonBundle common = CommonBundle.INSTANCE;
@@ -87,7 +87,7 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 	@UiField
 	HTML svgContainer;
 	@UiField
-	ListBox levelList;
+	DifficultyPicker difficultyPicker;
 	@UiField
 	FlowPanel navigationPanel;
 	Widget menuWidget;
@@ -209,7 +209,11 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 	 */
 	@Override
 	public void onModuleLoad() {
+		// Inject styles from the common modules, taking into account media queries
 		common.css().ensureInjected();
+		common.mediaQueries().ensureInjected();
+		Utils.injectMediaQuery("(orientation:landscape)", common.mediaQueriesLandscape());
+		Utils.injectMediaQuery("(orientation:portrait)", common.mediaQueriesPortrait());
 		StyleInjector.inject(style.getText(), true);
 		
 		// Load the game levels
@@ -222,10 +226,6 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 			menuWidget = LicenseBox.createAboutButton();
 		}
 		navigationPanel.insert(menuWidget, 0);
-		levelList.addItem(PushConstants.INSTANCE.easy());
-		levelList.addItem(PushConstants.INSTANCE.medium());
-		levelList.addItem(PushConstants.INSTANCE.hard());
-		levelList.setSelectedIndex(0);
 		RootPanel.get(CommonConstants.ID_UIROOT).add(panel);
 		readPushDef();
 	}
@@ -247,8 +247,8 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 		readPushDef();
 	}
 
-	@UiHandler("levelList")
-	public void levelChange(ChangeEvent event) {
+	@UiHandler("difficultyPicker")
+	public void levelChange(ValueChangeEvent<Integer> event) {
 		generate();
 	}
 	
@@ -275,10 +275,10 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 		
 		// Compute the number of tiles
 		if (width < height) {
-			xcount = levelList.getSelectedIndex() + 3;
+			xcount = difficultyPicker.getDifficulty() + 3;
 			ycount = (int)(xcount * height / width);
 		} else {
-			ycount = levelList.getSelectedIndex() + 3;
+			ycount = difficultyPicker.getDifficulty() + 3;
 			xcount = (int)(ycount * width / height);
 		}
 		hole = xcount * ycount - 1;
