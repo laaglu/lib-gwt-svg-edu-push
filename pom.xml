@@ -53,7 +53,18 @@
 				</includes>
 			</resource>
 			<resource>
-				<directory>${basedir}/src/main/resources</directory>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>org/vectomatic/svg/edu/client/commons/*.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>org/vectomatic/svg/edu/client/commons/*.properties</exclude>
+				</excludes>
 			</resource>
 		</resources>
         <plugins>
