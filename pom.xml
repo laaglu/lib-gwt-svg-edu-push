@@ -7,7 +7,7 @@
 	</parent>
 	<artifactId>lib-gwt-svg-edu-push</artifactId>
 	<packaging>war</packaging>
-	<version>0.3.16-SNAPSHOT</version>
+	<version>0.3.16</version>
 	<name>lib-gwt-svg-edu-push</name>
 	<description>Educational game for kindergarten children, based on lib-gwt-svg. Push push is an SVG adaptation of the classic tile puzzle game: the player must reorder the tiles by pushing them in order to form an image</description>
 	<url>http://www.vectomatic.org/mvn-sites/lib-gwt-svg-edu-push</url>
