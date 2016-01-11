@@ -26,5 +26,7 @@ public interface PushCss extends CssResource {
 	public String borderOut();
 	@ClassName("tile-border")
 	public String tileBorder();
+	@ClassName("root-svg")
+	String rootSvg();
 
 }

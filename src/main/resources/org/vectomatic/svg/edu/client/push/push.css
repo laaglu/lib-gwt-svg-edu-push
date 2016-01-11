@@ -11,3 +11,8 @@
 	fill:none;
 	stroke:black;
 }
+.root-svg {
+  position:absolute;
+  width:100%;
+  height:100%;
+}

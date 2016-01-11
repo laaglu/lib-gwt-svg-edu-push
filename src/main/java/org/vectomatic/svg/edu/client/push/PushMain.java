@@ -254,6 +254,7 @@ public class PushMain implements MouseDownHandler, EntryPoint {
 	
 	private void generate() {
 		OMSVGSVGElement rootSvg = new OMSVGSVGElement();
+		rootSvg.addClassNameBaseVal(style.rootSvg());
 		rootSvg.addMouseDownHandler(this);
 		OMSVGDefsElement defs = new OMSVGDefsElement();
 		rootSvg.appendChild(defs);
